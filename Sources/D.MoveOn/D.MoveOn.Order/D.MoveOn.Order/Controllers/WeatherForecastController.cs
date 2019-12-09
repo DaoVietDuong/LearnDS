@@ -2,10 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using D.MoveOn.Common;
+using D.MoveOn.Common.Dispatchers;
+using D.MoveOn.Common.RabbitMQ;
+using D.MoveOn.Demo.Messages.Commands;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
-namespace D.MoveOn.Order.Controllers
+namespace D.MoveOn.Demo.Controllers
 {
     [ApiController]
     [Route("[controller]")]
@@ -15,11 +19,16 @@ namespace D.MoveOn.Order.Controllers
         {
             "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
         };
-
+        private readonly IDispatcher _dispatcher;
+        private readonly IBusPublisher _busPublisher;
         private readonly ILogger<WeatherForecastController> _logger;
 
-        public WeatherForecastController(ILogger<WeatherForecastController> logger)
+        public WeatherForecastController(IDispatcher dispatcher,
+                                         IBusPublisher busPublisher,
+                                         ILogger<WeatherForecastController> logger)
         {
+            this._dispatcher = dispatcher;
+            this._busPublisher = busPublisher;
             _logger = logger;
         }
 
@@ -34,6 +43,12 @@ namespace D.MoveOn.Order.Controllers
                 Summary = Summaries[rng.Next(Summaries.Length)]
             })
             .ToArray();
+        }
+
+        [HttpPost("CreateIem")]
+        public async Task<IActionResult> CreateItem(CreateItemCommand command){
+             await _busPublisher.SendAsync(command, CorrelationContext.Empty);
+             return Accepted();
         }
     }
 }

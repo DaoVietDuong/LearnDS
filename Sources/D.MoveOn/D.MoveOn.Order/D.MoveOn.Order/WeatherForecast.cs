@@ -1,6 +1,6 @@
 using System;
 
-namespace D.MoveOn.Order
+namespace D.MoveOn.Demo
 {
     public class WeatherForecast
     {

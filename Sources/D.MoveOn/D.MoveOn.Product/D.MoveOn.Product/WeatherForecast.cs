@@ -1,6 +1,6 @@
 using System;
 
-namespace D.MoveOn.Product
+namespace JD.MoveOn.Product
 {
     public class WeatherForecast
     {

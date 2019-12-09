@@ -1,0 +1,7 @@
+POST http://localhost:5001/WeatherForecast/CreateIem HTTP/1.1
+content-type: application/json
+
+{
+    "id": 1,
+    "name": "Duong 1"
+}

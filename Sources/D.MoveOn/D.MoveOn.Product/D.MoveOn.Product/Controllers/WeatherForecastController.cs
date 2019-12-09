@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
-namespace D.MoveOn.Product.Controllers
+namespace JD.MoveOn.Product.Controllers
 {
     [ApiController]
     [Route("[controller]")]
