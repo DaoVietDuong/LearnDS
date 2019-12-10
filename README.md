@@ -8,7 +8,7 @@ Order Service
 Display Service  
 Management Service  
 
-
+---
 
 #How to setup  
 ----consul  
@@ -24,13 +24,13 @@ docker run --net my-net --name fabio -d -p 9998:9998 -p 9999:9999 --env FABIO_RE
 ---redis  
 docker run -it --net my-net --rm -p 6379:6379 redis redis-cli -h my-redis  
 docker run -it -p 6379:6379 --name some-redis --rm  -d redis  
----  
+ 
 docker build -t  demo2-service:demo -f ./Dev.Dockerfile .  
----  
+
 docker exec -ti <container-id> /bin/bash  
 apt-get update && apt-get install iputils-ping  
 apt-get update && apt-get install -y telnet  
 ping -w 4 <host-name>  
---------------------  
-need to be in the same network  
---  
+
+#need to be in the same network  
+
