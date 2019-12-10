@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
-namespace D.MoveOn.Demo.Controllers
+namespace D.MoveOn.Order.Controllers
 {
     [ApiController]
     [Route("")]

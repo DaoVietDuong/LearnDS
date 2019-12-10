@@ -10,6 +10,16 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using D.MoveOn.Common.Consul;
+using D.MoveOn.Common;
+using D.MoveOn.Notification.Infra;
+using Microsoft.AspNetCore.SignalR.Redis;
+using D.MoveOn.Notification.Hubs;
+using D.MoveOn.Common.Fabio;
+using Autofac;
+using D.MoveOn.Common.RabbitMQ;
+using D.MoveOn.Common.Dispatchers;
+using D.MoveOn.Common.Mvc;
 
 namespace D.MoveOn.Notification
 {
@@ -25,11 +35,44 @@ namespace D.MoveOn.Notification
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
+            services.AddCustomMvc();
+            //services.AddControllers();
+            services.AddConsulServices();
+            services.AddFabio();
+            AddSignalR(services);
         }
 
+        public void ConfigureContainer(ContainerBuilder builder)
+        {
+            builder.RegisterAssemblyTypes(typeof(Startup).Assembly)
+                .AsImplementedInterfaces();
+
+            builder.AddRabbitMQServices();
+            builder.AddDispatcherServices();
+        }
+
+        private void AddSignalR(IServiceCollection services)
+        {
+            services.AddSignalR()
+        .AddStackExchangeRedis(options => {
+            options.Configuration.ChannelPrefix = "ChannelName";
+            options.Configuration.EndPoints.Add("localhost", 6379);
+            options.Configuration.ClientName = "ClientNameSignalR";
+            options.Configuration.AllowAdmin = true;
+        });
+            services.AddCors(options =>
+            {
+                options.AddPolicy("CorsPolicy", builder => builder
+                .WithOrigins("http://localhost:4200")
+                .AllowAnyMethod()
+                .AllowAnyHeader()
+                .AllowCredentials());
+            });
+        }
+
+
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IHostApplicationLifetime applicationLifetime)
         {
             if (env.IsDevelopment())
             {
@@ -40,12 +83,18 @@ namespace D.MoveOn.Notification
 
             app.UseRouting();
 
+            app.UseCors("CorsPolicy");
+
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                endpoints.MapHub<LufHub>("/message");
             });
+
+            app.UseConsul(applicationLifetime);
+            app.UseRabbitMQ();
         }
     }
 }

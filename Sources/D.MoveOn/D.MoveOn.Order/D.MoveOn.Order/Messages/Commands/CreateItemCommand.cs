@@ -1,7 +1,7 @@
 using D.MoveOn.Common.Messages;
 using Newtonsoft.Json;
 
-namespace D.MoveOn.Demo.Messages.Commands
+namespace D.MoveOn.Order.Messages.Commands
 {
     [MessageNamespace("demo2")]
     public class CreateItemCommand : ICommand

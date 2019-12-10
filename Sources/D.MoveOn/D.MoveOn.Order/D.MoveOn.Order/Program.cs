@@ -9,7 +9,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
-namespace D.MoveOn.Demo
+namespace D.MoveOn.Order
 {
     public class Program
     {

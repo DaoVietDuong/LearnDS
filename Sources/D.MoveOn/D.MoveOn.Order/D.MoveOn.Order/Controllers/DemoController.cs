@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using D.MoveOn.Common.Mvc;
 
-namespace D.MoveOn.Demo.Controllers
+namespace D.MoveOn.Order.Controllers
 {
     [ApiController]
     [Route("[controller]")]

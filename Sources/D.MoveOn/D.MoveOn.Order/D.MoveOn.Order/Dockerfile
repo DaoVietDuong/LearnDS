@@ -2,4 +2,4 @@ FROM mcr.microsoft.com/dotnet/core/aspnet:3.0
 
 COPY ./bin/Release/netcoreapp3.0/publish app/
 
-ENTRYPOINT ["dotnet", "app/D.MoveOn.Demo.dll"]
+ENTRYPOINT ["dotnet", "app/D.MoveOn.Order.dll"]

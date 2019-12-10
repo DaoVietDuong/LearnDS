@@ -5,11 +5,11 @@ using System.Threading.Tasks;
 using D.MoveOn.Common;
 using D.MoveOn.Common.Dispatchers;
 using D.MoveOn.Common.RabbitMQ;
-using D.MoveOn.Demo.Messages.Commands;
+using D.MoveOn.Order.Messages.Commands;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
-namespace D.MoveOn.Demo.Controllers
+namespace D.MoveOn.Order.Controllers
 {
     [ApiController]
     [Route("[controller]")]

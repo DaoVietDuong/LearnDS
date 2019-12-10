@@ -74,9 +74,9 @@ namespace D.MoveOn.Order
 
             app.UseAuthorization();
 
-            app.UseEndpoints(routes =>
+            app.UseEndpoints(endpoints =>
             {
-                routes.MapRazorPages();
+                endpoints.MapControllers();
             });
             // app.UseHttpsRedirection();
             app.UseMvc();

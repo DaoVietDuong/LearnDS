@@ -1,0 +1,12 @@
+{
+    "products": [{"id":1,"name":"Puma, south american","description":"Westfälische Wilhelms-Universität Münster","price":37,"updatedAt":"3/7/2019"},
+        {"id":2,"name":"African porcupine","description":"Haramaya University","price":69,"updatedAt":"12/25/2018"},
+        {"id":3,"name":"Hen, sage","description":"Osaka Prefectural University","price":79,"updatedAt":"11/14/2019"},
+        {"id":4,"name":"Blue-breasted cordon bleu","description":"University of Lagos","price":42,"updatedAt":"11/22/2019"},
+        {"id":5,"name":"Secretary bird","description":"Comilla University","price":64,"updatedAt":"4/6/2019"},
+        {"id":6,"name":"Wild boar","description":"Centro de Estudios Universitarios Xochicalco","price":16,"updatedAt":"6/16/2019"},
+        {"id":7,"name":"Macaw, blue and gold","description":"Huanghe Science & Technology University","price":93,"updatedAt":"2/4/2019"},
+        {"id":8,"name":"Wolf, timber","description":"Dokuz Eylül University","price":2,"updatedAt":"12/10/2018"},
+        {"id":9,"name":"Ring-tailed coatimundi","description":"Universidad Católica de Manizales","price":13,"updatedAt":"3/10/2019"},
+        {"id":10,"name":"South American puma","description":"Dr. Hari Singh Gour University, formerly University of Sagar","price":46,"updatedAt":"6/22/2019"}]
+}
