@@ -12,21 +12,22 @@ namespace D.MoveOn.Common.Mvc
 {
     public static class Extensions
     {
-        public static void AddCustomMvc(this IServiceCollection services){
+        public static void AddCustomMvc(this IServiceCollection services)
+        {
             services
                 .AddMvc(option => option.EnableEndpointRouting = false);
-                
-                services
-                .AddMvcCore()
-                .AddDataAnnotations()
-                .AddApiExplorer()
-                .AddDefaultJsonOptions()
-                .AddAuthorization();
 
-                services.AddSingleton<IServiceInfor, ServiceInfor>();
+            services
+            .AddMvcCore()
+            .AddDataAnnotations()
+            .AddApiExplorer()
+            .AddDefaultJsonOptions()
+            .AddAuthorization();
+
+            services.AddSingleton<IServiceInfor, ServiceInfor>();
         }
 
-        
+
         public static IMvcCoreBuilder AddDefaultJsonOptions(this IMvcCoreBuilder builder)
             => builder.AddNewtonsoftJson(o =>
             {
@@ -38,5 +39,20 @@ namespace D.MoveOn.Common.Mvc
                 o.SerializerSettings.Formatting = Formatting.Indented;
                 o.SerializerSettings.Converters.Add(new StringEnumConverter());
             });
+
+        public static IServiceCollection AddInitializers(this IServiceCollection services, params Type[] initializers)
+    => initializers == null
+        ? services
+        : services.AddTransient<IStartupInitializer, StartupInitializer>(c =>
+        {
+            var startupInitializer = new StartupInitializer();
+            var validInitializers = initializers.Where(t => typeof(IInitializer).IsAssignableFrom(t));
+            foreach (var initializer in validInitializers)
+            {
+                startupInitializer.AddInitializer(c.GetService(initializer) as IInitializer);
+            }
+
+            return startupInitializer;
+        });
     }
 }

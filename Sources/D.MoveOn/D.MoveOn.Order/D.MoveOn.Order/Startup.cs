@@ -16,6 +16,10 @@ using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using D.MoveOn.Common.Dispatchers;
 using D.MoveOn.Common.Mvc;
+using D.MoveOn.Common.Mongo;
+using D.MoveOn.Order.Messages.Commands;
+using D.MoveOn.Common;
+using D.MoveOn.Common.Tracer;
 
 namespace D.MoveOn.Order
 {
@@ -32,8 +36,9 @@ namespace D.MoveOn.Order
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddCustomMvc();
-
+            services.AddInitializers(typeof(IMongoDbInitializer));
             services.AddConsulServices();
+            services.AddTracerService();
             services.AddFabio();
         }
 
@@ -44,12 +49,14 @@ namespace D.MoveOn.Order
 
             builder.AddRabbitMQServices();
             builder.AddDispatcherServices();
+            builder.AddMongoServices();
+            builder.AddMongoRepository<D.MoveOn.Order.Domain.Order>("Orders");
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app,
             IHostApplicationLifetime applicationLifetime,
-            IHostEnvironment env)
+            IHostEnvironment env, IStartupInitializer startupInitializer)
         {
             if (app is null)
             {
@@ -82,7 +89,8 @@ namespace D.MoveOn.Order
             app.UseMvc();
 
             app.UseConsul(applicationLifetime);
-            app.UseRabbitMQ();
+            app.UseRabbitMQ().SubscribeCommand<CreateOrderCommand>();
+            startupInitializer.InitializeAsync();
         }
     }
 }

@@ -1,7 +1,8 @@
-POST http://localhost:5001/WeatherForecast/CreateIem HTTP/1.1
+POST http://localhost:5010/Demo/CreateOrder HTTP/1.1
 content-type: application/json
 
 {
-    "id": 1,
-    "name": "Duong 1"
+    "id": "D3A10C75-12F6-4C57-B172-9BE915E6A3D5",
+    "name": "Duong 10",
+	"productId": "1E09BDAF-2AE7-4725-BA7E-6511DE6857C2"
 }

@@ -20,6 +20,8 @@ using Autofac;
 using D.MoveOn.Common.RabbitMQ;
 using D.MoveOn.Common.Dispatchers;
 using D.MoveOn.Common.Mvc;
+using D.MoveOn.Notification.Messages.Events;
+using D.MoveOn.Common.Tracer;
 
 namespace D.MoveOn.Notification
 {
@@ -39,6 +41,7 @@ namespace D.MoveOn.Notification
             //services.AddControllers();
             services.AddConsulServices();
             services.AddFabio();
+            services.AddTracerService();
             AddSignalR(services);
         }
 
@@ -94,7 +97,7 @@ namespace D.MoveOn.Notification
             });
 
             app.UseConsul(applicationLifetime);
-            app.UseRabbitMQ();
+            app.UseRabbitMQ().SubscribeEvent<ResultProcess>(@namespace: "order");
         }
     }
 }

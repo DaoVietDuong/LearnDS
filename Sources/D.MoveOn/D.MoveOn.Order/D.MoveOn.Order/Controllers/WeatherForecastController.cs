@@ -46,7 +46,8 @@ namespace D.MoveOn.Order.Controllers
         }
 
         [HttpPost("CreateIem")]
-        public async Task<IActionResult> CreateItem(CreateItemCommand command){
+        public async Task<IActionResult> CreateItem(CreateOrderCommand command){
+            await _dispatcher.SendAsync(command);
              await _busPublisher.SendAsync(command, CorrelationContext.Empty);
              return Accepted();
         }

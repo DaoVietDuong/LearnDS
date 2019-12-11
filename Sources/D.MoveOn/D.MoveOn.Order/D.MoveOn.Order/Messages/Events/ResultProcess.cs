@@ -1,8 +1,11 @@
 ﻿using D.MoveOn.Common.Messages;
 using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
-namespace D.MoveOn.Notification.Messages.Events
+namespace D.MoveOn.Order.Messages.Events
 {
     [MessageNamespace("order")]
     public class ResultProcess : IEvent

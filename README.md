@@ -24,6 +24,9 @@ docker run --net my-net --name fabio -d -p 9998:9998 -p 9999:9999 --env FABIO_RE
 ---redis  
 docker run -it --net my-net --rm -p 6379:6379 redis redis-cli -h my-redis  
 docker run -it -p 6379:6379 --name some-redis --rm  -d redis  
+
+---mongo  
+docker run --name mongo -d -p 27017:27017 mongo:4  
  
 docker build -t  demo2-service:demo -f ./Dev.Dockerfile .  
 
